@@ -1,30 +1,36 @@
 import React from 'react';
-import './App.css';
-import usersList from './model';
+import UsersList from './usersList'
+import usersModel from './model';
+import SearchBar from './SearchBar';
+import { Loading } from './Loading';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { dataLoading: false }
+    this.state = { dataLoading: false, searchText: ''}
+  }
+
+  searchTextChange = (searchText) => {
+    this.setState({ searchText: searchText })
   }
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ dataLoading: true });
-    }, 200);
+      this.setState({ dataLoading: true});
+    }, 500);
   }
 
   render() {
-    if (!this.state.dataLoading) return <div>Loading...</div>
+    if (!this.state.dataLoading){
+      return <Loading></Loading>
+    } 
 
     return (
       <div>
-        Result
-        <ul>
-        {usersList.map((res) =>
-          <li key={res.id.toString()}>{res.name}</li>
-        )}
-        </ul>
+        Search
+        <br />
+        <SearchBar searchText={this.state.searchText} onSearchTextChange={this.searchTextChange}></SearchBar>
+        <UsersList searchText={this.state.searchText} users={usersModel}></UsersList>
       </div>
     );
   }

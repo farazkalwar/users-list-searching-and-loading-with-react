@@ -1,11 +1,11 @@
-let usersList = []
+let usersModel = []
 
 fetch('https://jsonplaceholder.typicode.com/users')
     .then(res => res.json())
     .then((users) => {
         users.forEach(user => {
-            usersList.push(user)
+            usersModel.push(user)
         });
     })
 
-module.exports = usersList 
+module.exports = usersModel 
